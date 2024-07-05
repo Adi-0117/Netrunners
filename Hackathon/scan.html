@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AR Custom Markers Example</title>
+  <link rel="stylesheet" href="style1.css">
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.7.2/aframe/build/aframe-ar.js"></script>
+</head>
+
+<body>
+  <button id="closeButton" onclick="hideEntities()">X</button>
+  <a-scene embedded arjs='detectionMode: mono_and_matrix; matrixCodeType: 3x3; sourceType: webcam;'>
+    <!-- Marker one - barcode value 1 -->
+    <a-marker type='barcode' value='1' emitevents='true'>
+      <a-entity></a-entity>
+    </a-marker>
+
+    <!-- Marker two - barcode value 2 -->
+    <a-marker type='barcode' value='2' emitevents='true'>
+      <a-entity></a-entity>
+    </a-marker>
+
+    <!-- Marker three - barcode value 3 -->
+    <a-marker type='barcode' value='3' emitevents='true'>
+      <a-entity></a-entity>
+    </a-marker>
+
+    <!-- List of expenses on the left side -->
+    <a-entity id="leftExpenses" visible="false" position="-1 0 -2">
+      <a-text id="leftExpensesHead" value="Expenses:" color="#FFF" width="3" position="-1 0.7 -2"
+        font="mozillavr"></a-text>
+      <a-text id="leftExpensesText" value="Groceries: $100\nEntertainment: $50\nBills: $200" color="#FFF" width="3"
+        position="-1 0.3 -2" font="roboto" weight="bold"></a-text>
+      <a-text id="totalBalanceText" value="Total Balance: $303.77" color="#FFF" width="3" position="-1 -0.3 -2"
+        font="mozillavr" weight="normal"></a-text>
+      <a-plane src="images/pie-chart.png" position="1.8 0.3 -0.5" height="1" width="1"></a-plane>
+    </a-entity>
+
+    <a-entity id="loanTOC" visible="false" position="0 0 -2">
+      <a-text value="Loan Terms and Conditions" color="#FFF" width="3" position="-2.5 1.1 -3" font="mozillavr"
+        weight="bold"></a-text>
+      <a-text value="Loan Number: 123456789" color="#FFF" width="3" position="-2.52 0.8 -3" font="roboto"></a-text>
+      <a-text value="Borrower's Name: John Doe" color="#FFF" width="3" position="-2.52 0.6 -3" font="roboto"></a-text>
+      <a-text value="Lender's Name: ABC Bank" color="#FFF" width="3" position="-2.52 0.4 -3" font="roboto"></a-text>
+      <a-text value="Loan Amount: $10,000" color="#FFF" width="3" position="-2.52 0.2 -3" font="roboto"></a-text>
+      <a-text value="Interest Rate: 5%" color="#FF0000" width="3" position="-2.52 0 -3" font="roboto"></a-text>
+      <a-text value="Late Payment Fee: $50" color="#FFF" width="3" position="-2.52 -0.2 -3" font="roboto"></a-text>
+      <a-text value="Purpose of Loan: Business Expansion" color="#FFF" width="3" position="-0.5 1 -3"
+        font="roboto"></a-text>
+      <a-text value="Repayment Rate: $500/month" color="#00FF00" width="3" position="-0.5 0.8 -3"
+        font="roboto"></a-text>
+      <a-text value="Loan Start Date: 01/01/2024" color="#FFF" width="3" position="-0.5 0.6 -3" font="roboto"></a-text>
+      <a-text value="Loan End Date: 01/01/2027" color="#FFF" width="3" position="-0.5 0.4 -3" font="roboto"></a-text>
+      <a-text value="Signature:" color="#FFF" width="3" position="-2 -0.7 -2" font="roboto"></a-text>
+      <a-plane color="#FFF" height="0.1" width="1" position="-0.85 -0.7 -2"></a-plane>
+      <a-plane src="images/repayment-schedule.png" position="0.7 -0.3 -2" height="1" width="1.5"></a-plane>
+    </a-entity>
+
+    <a-entity id="creditcard" visible="false" position="-1 0 -2" material="color: #4CAF50">
+      <a-text id="bcThreeHead" value="Credit Card Summary" color="#FFF" width="2.8" position="-1 1.07 -2"
+        font="mozillavr">
+      </a-text>
+      <a-text class="bcThreeCardDetails" value="Card Name: Platinum Rewards Credit Card" color="#FFF" width="1.3"
+        position="-1 0.9 -2" font="roboto">
+      </a-text>
+      <a-text class="bcThreeCardDetails" value="Issuer: Westpac Bank" color="#FFF" width="1.3" position="-1 0.8 -2"
+        font="roboto">
+      </a-text>
+      <a-text class="bcThreeCardDetails" value="Credit Limit: $10,000" color="#FFF" width="1.3" position="-1 0.7 -2"
+        font="roboto">
+      </a-text>
+
+      <!-- Interest Rates -->
+      <a-text class="bcThreeCardDetails" value="Interest Rates" color="#FFF" width="1.8" position="-1 0.63 -2"
+        font="mozillavr">
+      </a-text>
+      <a-text class="bcThreeCardDetails" value="Purchase APR: 18.99% variable" color="#FFF" width="1.3"
+        position="-0.95 0.5 -2" font="roboto">
+      </a-text>
+      <a-text class="bcThreeCardDetails" value="Balance Transfer APR: 18.99% variable" color="#FFF" width="1.3"
+        position="-0.95 0.4 -2" font="roboto">
+      </a-text>
+      <a-text class="bcThreeCardDetails" value="Cash Advance APR: 25.99% variable" color="#FFF" width="1.3"
+        position="-0.95 0.3 -2" font="roboto">
+      </a-text>
+      <a-text class="bcThreeCardDetails"
+        value="Penalty APR: 29.99% variable (applies if you make a late payment or exceed your credit limit)"
+        color="#FFF" width="1.3" position="-0.95 0.18 -2" font="roboto">
+      </a-text>
+
+      <!-- Fees -->
+      <a-text class="bcThreeCardDetails" value="Fees" color="#FFF" width="1.8" position="-1 0.07 -2" font="mozillavr">
+      </a-text>
+      <a-text class="bcThreeCardDetails" value="Annual Fee: $0" color="#FFF" width="1.3" position="-0.95 -0.07 -2"
+        font="roboto">
+      </a-text>
+      <a-text class="bcThreeCardDetails" value="Balance Transfer Fee: 3% of each transfer" color="#FFF" width="1.3"
+        position="-0.95 -0.17 -2" font="roboto">
+      </a-text>
+      <a-text class="bcThreeCardDetails" value="Foreign Transaction Fee: 2.5% of each transaction" color="#FFF"
+        width="1.3" position="-0.95 -0.27 -2" font="roboto">
+      </a-text>
+      <a-text class="bcThreeCardDetails" value="Late/Returned Payment Fee: Up to $39" color="#FFF" width="1.3"
+        position="-0.95 -0.37 -2" font="roboto">
+      </a-text>
+
+      <!-- Cashback Offers -->
+      <a-text id="bcThreeHead" value="Cashback Offers" color="#FFF" width="1.8" position="0.7 1.06 -2" font="mozillavr">
+      </a-text>
+      <a-text class="bcThreeCardDetails"
+        value="Groceries: 3% cashback on grocery store purchases (up to $6,000 per year, then 1%)" color="#FFF"
+        width="1.3" position="0.75 0.9 -2" font="roboto">
+      </a-text>
+      <a-text class="bcThreeCardDetails"
+        value="Dining: 2% cashback on dining at restaurants, including takeout and eligible delivery services"
+        color="#FFF" width="1.3" position="0.75 0.75 -2" font="roboto">
+      </a-text>
+      <a-text class="bcThreeCardDetails" value="All Other Purchases: 1% cashback on all other purchases" color="#FFF"
+        width="1.3" position="0.75 0.6 -2" font="roboto">
+      </a-text>
+
+      <!-- Rewards and Other Benefits -->
+      <a-text id="bcThreeHead" value="Rewards and Other Benefits" color="#FFF" width="1.8" position="0.7 0.48 -2"
+        font="mozillavr">
+      </a-text>
+      <a-text class="bcThreeCardDetails" value="Points Earned: 1.5 points per dollar spent on all purchases"
+        color="#FFF" width="1.3" position="0.75 0.32 -2" font="roboto">
+      </a-text>
+      <a-text class="bcThreeCardDetails"
+        value="Sign-up Bonus: 20,000 points if you spend $1,000 within the first 3 months" color="#FFF" width="1.3"
+        position="0.75 0.16 -2" font="roboto">
+      </a-text>
+      <a-text class="bcThreeCardDetails" value="Travel Insurance" color="#FFF" width="1.3" position="0.75 0.03 -2"
+        font="roboto">
+      </a-text>
+      <a-text class="bcThreeCardDetails" value="Purchase Protection" color="#FFF" width="1.3" position="0.75 -0.06 -2"
+        font="roboto">
+      </a-text>
+      <a-text class="bcThreeCardDetails" value="Concierge Service" color="#FFF" width="1.3" position="0.75 -0.16 -2"
+        font="roboto">
+      </a-text>
+
+      <!-- chart -->
+      <a-plane src="images/differentchart.png" position="1.65 -0.25 -0.5" height="0.6" width="0.8">
+      </a-plane>
+    </a-entity>
+
+    <!-- Square in the middle -->
+    <a-entity id="middleSquare" visible="false" geometry="primitive: box; depth: 0.25; height: 0.25; width: 0.25"
+      material="color: red" position="0 0 -2" rotation="45 45 0">
+    </a-entity>
+
+    <a-entity id="creditcard" visible="false" position="-1 0 -2" material="color: #4CAF50">
+      <a-text id="bcThreeHead" value="Credit Card Summary" color="#FFF" width="2.8" position="-1 1.07 -2"
+        font="mozillavr">
+      </a-text>
+      <a-text class="bcThreeCardDetails" value="Card Name: Platinum Rewards Credit Card" color="#FFF" width="1.3"
+        position="-1 0.9 -2" font="roboto">
+      </a-text>
+      <a-text class="bcThreeCardDetails" value="Issuer: Westpac Bank" color="#FFF" width="1.3" position="-1 0.8 -2"
+        font="roboto">
+      </a-text>
+      <a-text class="bcThreeCardDetails" value="Credit Limit: $10,000" color="#FFF" width="1.3" position="-1 0.7 -2"
+        font="roboto">
+      </a-text>
+
+      <!-- Interest Rates -->
+      <a-text class="bcThreeCardDetails" value="Interest Rates" color="#FFF" width="1.8" position="-1 0.63 -2"
+        font="mozillavr">
+      </a-text>
+      <a-text class="bcThreeCardDetails" value="Purchase APR: 18.99% variable" color="#FFF" width="1.3"
+        position="-0.95 0.5 -2" font="roboto">
+      </a-text>
+      <a-text class="bcThreeCardDetails" value="Balance Transfer APR: 18.99% variable" color="#FFF" width="1.3"
+        position="-0.95 0.4 -2" font="roboto">
+      </a-text>
+      <a-text class="bcThreeCardDetails" value="Cash Advance APR: 25.99% variable" color="#FFF" width="1.3"
+        position="-0.95 0.3 -2" font="roboto">
+      </a-text>
+      <a-text class="bcThreeCardDetails"
+        value="Penalty APR: 29.99% variable (applies if you make a late payment or exceed your credit limit)"
+        color="#FFF" width="1.3" position="-0.95 0.18 -2" font="roboto">
+      </a-text>
+
+      <!-- Fees -->
+      <a-text class="bcThreeCardDetails" value="Fees" color="#FFF" width="1.8" position="-1 0.07 -2" font="mozillavr">
+      </a-text>
+      <a-text class="bcThreeCardDetails" value="Annual Fee: $0" color="#FFF" width="1.3" position="-0.95 -0.07 -2"
+        font="roboto">
+      </a-text>
+      <a-text class="bcThreeCardDetails" value="Balance Transfer Fee: 3% of each transfer" color="#FFF" width="1.3"
+        position="-0.95 -0.17 -2" font="roboto">
+      </a-text>
+      <a-text class="bcThreeCardDetails" value="Foreign Transaction Fee: 2.5% of each transaction" color="#FFF"
+        width="1.3" position="-0.95 -0.27 -2" font="roboto">
+      </a-text>
+      <a-text class="bcThreeCardDetails" value="Late/Returned Payment Fee: Up to $39" color="#FFF" width="1.3"
+        position="-0.95 -0.37 -2" font="roboto">
+      </a-text>
+
+      <!-- Cashback Offers -->
+      <a-text id="bcThreeHead" value="Cashback Offers" color="#FFF" width="1.8" position="0.7 1.06 -2" font="mozillavr">
+      </a-text>
+      <a-text class="bcThreeCardDetails"
+        value="Groceries: 3% cashback on grocery store purchases (up to $6,000 per year, then 1%)" color="#FFF"
+        width="1.3" position="0.75 0.9 -2" font="roboto">
+      </a-text>
+      <a-text class="bcThreeCardDetails"
+        value="Dining: 2% cashback on dining at restaurants, including takeout and eligible delivery services"
+        color="#FFF" width="1.3" position="0.75 0.75 -2" font="roboto">
+      </a-text>
+      <a-text class="bcThreeCardDetails" value="All Other Purchases: 1% cashback on all other purchases" color="#FFF"
+        width="1.3" position="0.75 0.6 -2" font="roboto">
+      </a-text>
+
+      <!-- Rewards and Other Benefits -->
+      <a-text id="bcThreeHead" value="Rewards and Other Benefits" color="#FFF" width="1.8" position="0.7 0.48 -2"
+        font="mozillavr">
+      </a-text>
+      <a-text class="bcThreeCardDetails" value="Points Earned: 1.5 points per dollar spent on all purchases"
+        color="#FFF" width="1.3" position="0.75 0.32 -2" font="roboto">
+      </a-text>
+      <a-text class="bcThreeCardDetails"
+        value="Sign-up Bonus: 20,000 points if you spend $1,000 within the first 3 months" color="#FFF" width="1.3"
+        position="0.75 0.16 -2" font="roboto">
+      </a-text>
+      <a-text class="bcThreeCardDetails" value="Travel Insurance" color="#FFF" width="1.3" position="0.75 0.03 -2"
+        font="roboto">
+      </a-text>
+      <a-text class="bcThreeCardDetails" value="Purchase Protection" color="#FFF" width="1.3" position="0.75 -0.06 -2"
+        font="roboto">
+      </a-text>
+      <a-text class="bcThreeCardDetails" value="Concierge Service" color="#FFF" width="1.3" position="0.75 -0.16 -2"
+        font="roboto">
+      </a-text>
+
+      <!-- chart -->
+      <a-plane src="differentchart.png" position="1.65 -0.25 -0.5" height="0.6" width="0.8">
+      </a-plane>
+    </a-entity>
+
+    <!-- Default camera entity -->
+    <a-entity camera></a-entity>
+  </a-scene>
+
+  <script>
+    let isDetectionEnabled = true; // Flag to control detection
+
+    document.querySelectorAll('a-marker').forEach(marker => {
+      marker.addEventListener('markerFound', () => {
+        if (!isDetectionEnabled) return; // Exit if detection is disabled
+
+        const value = marker.getAttribute('value');
+        updateEntitiesVisibility(value, true); // Update visibility
+        isDetectionEnabled = false; // Disable detection until entities are hidden
+      });
+    });
+
+    function updateEntitiesVisibility(value, isVisible) {
+      const elementId = getElementIdFromValue(value);
+      const element = document.getElementById(elementId);
+      if (element) {
+        element.setAttribute('visible', isVisible);
+      }
+    }
+
+    function hideEntities() {
+      document.getElementById('leftExpenses').setAttribute('visible', 'false');
+      document.getElementById('middleSquare').setAttribute('visible', 'false');
+      document.getElementById('loanTOC').setAttribute('visible', 'false');
+      document.getElementById('creditcard').setAttribute('visible', 'false');
+      isDetectionEnabled = true; // Enable detection after hiding entities
+    }
+
+    function getElementIdFromValue(value) {
+      switch (value) {
+        case '1':
+          return 'leftExpenses';
+        case '2':
+          return 'loanTOC';
+        case '3':
+          return 'creditcard';
+        default:
+          return '';
+      }
+    }
+  </script>
+</body>
+
+</html>
