@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AR Custom Markers Example</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.7.2/aframe/build/aframe-ar.js"></script>
+</head>
+<body>
+    <button id="closeButton" onclick="hideEntities()">X</button>
+    <a-scene embedded arjs='detectionMode: mono_and_matrix; matrixCodeType: 3x3; sourceType: webcam;'>
+        <!-- Marker one - barcode value 1 -->
+        <a-marker type='barcode' value='1' emitevents='true'>
+            <a-entity></a-entity>
+        </a-marker>
+
+        <!-- Marker two - barcode value 2 -->
+        <a-marker type='barcode' value='2' emitevents='true'>
+            <a-entity></a-entity>
+        </a-marker>
+
+        <!-- Marker three - barcode value 3 -->
+        <a-marker type='barcode' value='3' emitevents='true'>
+            <a-entity></a-entity>
+        </a-marker>
+
+        <!-- List of expenses on the left side -->
+        <a-entity id="leftExpenses" visible="false" position="-1 0 -2">
+            <a-text id="leftExpensesText"
+                    value="Expenses\nGroceries: $100\nEntertainment: $50\nBills: $200"
+                    color="#FFF" width="3"
+                    position="-1 0.7 -2" rotation="0 0 0"
+                    side="double"
+                    shadow="cast: true; receive: false"></a-text>
+        </a-entity>
+
+        <!-- Square in the middle -->
+        <a-entity id="middleSquare" visible="false" geometry="primitive: box; depth: 0.25; height: 0.25; width: 0.25" material="color: red" position="0 0 -2" rotation="45 45 0">
+        </a-entity>
+
+        <!-- Triangle on the right side -->
+        <a-entity id="rightTriangle" visible="false" geometry="primitive: tetrahedron; radius: 0.25" material="color: green" position="1 0 -2" rotation="45 45 0">
+        </a-entity>
+
+        <!-- Default camera entity -->
+        <a-entity camera></a-entity>
+    </a-scene>
+
+    <script>
+      let isDetectionEnabled = true; // Flag to control detection
+
+      document.querySelectorAll('a-marker').forEach(marker => {
+        marker.addEventListener('markerFound', () => {
+          if (!isDetectionEnabled) return; // Exit if detection is disabled
+          
+          const value = marker.getAttribute('value');
+          updateEntitiesVisibility(value, true); // Update visibility
+          isDetectionEnabled = false; // Disable detection until entities are hidden
+        });
+      });
+
+      function updateEntitiesVisibility(value, isVisible) {
+        const elementId = getElementIdFromValue(value);
+        const element = document.getElementById(elementId);
+        if (element) {
+          element.setAttribute('visible', isVisible);
+        }
+      }
+
+      function hideEntities() {
+        document.getElementById('leftExpenses').setAttribute('visible', 'false');
+        document.getElementById('middleSquare').setAttribute('visible', 'false');
+        document.getElementById('rightTriangle').setAttribute('visible', 'false');
+        isDetectionEnabled = true; // Enable detection after hiding entities
+      }
+
+      function getElementIdFromValue(value) {
+        switch (value) {
+          case '1':
+            return 'leftExpenses';
+          case '2':
+            return 'middleSquare';
+          case '3':
+            return 'rightTriangle';
+          default:
+            return '';
+        }
+      }
+    </script>
+</body>
+</html>
